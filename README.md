@@ -4,7 +4,8 @@
 Requirements to run 
   - Must have NodeJs installed - https://nodejs.org/en/download/
 
+To start the api
 
-To start the api:
  -npm i 
+ 
  -npm start
