@@ -2,10 +2,13 @@
 
 
 Requirements to run 
-  - Must have NodeJs installed - https://nodejs.org/en/download/
+  - Must have Python
 
 To start the api
 
- -npm i 
+ pip install -r requirements.txt
  
- -npm start
+ py src/main.py
+ 
+ 
+ 
