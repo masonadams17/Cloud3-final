@@ -1,18 +1,13 @@
 import sys
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtWidgets import QLabel
+from PyQt5 import QtWidgets, uic
+from db import connectDB
+from controller.mainWindowController import mainWindowController
 
-app = QApplication([])
+#initializes application
+app = QtWidgets.QApplication([])
 
+#creates and opens the main window
+window = mainWindowController()
 
-window = QWidget()
-window.setWindowTitle('PyQt5 app')
-window.setGeometry(100,100,200,100)
-window.move(60, 15)
-helloMsg = QLabel('<h1>Hello World!</h1>', parent=window)
-helloMsg.move(60, 15)
-
-window.show()
-
-sys.exit(app.exec_())
+#listens for app exit and closes python instance
+sys.exit(app.exec_()) 
