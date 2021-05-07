@@ -53,7 +53,7 @@ class mainWindowController(qt.QMainWindow):
             #sets the row for the current item
             self.tableWidget.setItem(i, 0, qt.QTableWidgetItem(game.Rank))
             self.tableWidget.setItem(i, 1, qt.QTableWidgetItem(game.Name))
-            self.tableWidget.setCellWidget(i, 2, qt.QTableWidgetItem(game.Platform))
+            self.tableWidget.setItem(i, 2, qt.QTableWidgetItem(game.Platform))
                     
                 
             i+=1
