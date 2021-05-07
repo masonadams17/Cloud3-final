@@ -18,7 +18,7 @@ class mainWindowController(qt.QMainWindow):
         
         #configure the table
         self.tableWidget.setColumnCount(3)
-        self.tableWidget.setRowCount(100)
+        self.tableWidget.setRowCount(0)
         self.tableWidget.setHorizontalHeaderItem(0, qt.QTableWidgetItem("Rank"))
         self.tableWidget.setHorizontalHeaderItem(1, qt.QTableWidgetItem("Name"))
         self.tableWidget.setHorizontalHeaderItem(2, qt.QTableWidgetItem("Platform"))
@@ -38,10 +38,10 @@ class mainWindowController(qt.QMainWindow):
         results = dbCol.find({})
         
         #sets a iterator
-        i = 0
+        rowPosition = 0
         data = []
         #loops through all items and inserts them into the windows listbox
-        for items in results[0:100]:
+        for items in results:
             game = videoGame(items["Rank"],
                             items["Name"],
                             items["Genre"],
@@ -50,17 +50,40 @@ class mainWindowController(qt.QMainWindow):
                             8,
                             items["img_url"])   
             
+            self.tableWidget.insertRow(rowPosition)
             #sets the row for the current item
-            self.tableWidget.setItem(i, 0, qt.QTableWidgetItem(game.Rank))
-            self.tableWidget.setItem(i, 1, qt.QTableWidgetItem(game.Name))
-            self.tableWidget.setItem(i, 2, qt.QTableWidgetItem(game.Platform))
-                    
-                
-            i+=1
+            self.tableWidget.setItem(rowPosition, 0, qt.QTableWidgetItem(game.Rank))
+            self.tableWidget.setItem(rowPosition, 1, qt.QTableWidgetItem(game.Name))
+            self.tableWidget.setItem(rowPosition, 2, qt.QTableWidgetItem(game.Platform))
+            #sets next row number
+            rowPosition = self.tableWidget.rowCount()
+            
+        
+        
             
     def handleSearch(self):
         print("search button clicked")
+        searchEntry = self.searchBar.text()
         
+        dbCol = connectDB()
+        
+        results = dbCol.find({ "$or" : [{"Name":searchEntry},{"Genre":searchEntry},{"platform":searchEntry}]}  )
+        self.tableWidget.setRowCount(0)
+        rowPosition = 0
+        for i in results: 
+            game = videoGame(i["Rank"], i["Name"], i["Genre"], i["Platform"], i["Publisher"], 8, i["img_url"])
+            
+            print(repr(game))
+            #Dynamicaly adds new row
+            self.tableWidget.insertRow(rowPosition)
+            
+            #sets the row for the current item
+            self.tableWidget.setItem(rowPosition, 0, qt.QTableWidgetItem(game.Rank))
+            self.tableWidget.setItem(rowPosition, 1, qt.QTableWidgetItem(game.Name))
+            self.tableWidget.setItem(rowPosition, 2, qt.QTableWidgetItem(game.Platform))
+            #sets next row number
+            rowPosition = self.tableWidget.rowCount()
+            
             
             
             
