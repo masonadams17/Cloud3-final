@@ -11,5 +11,6 @@ def connectDB():
     db = client["VideoGameReccomender"]
     collection = db["VideoGames"]
     
+    
     return collection
 
