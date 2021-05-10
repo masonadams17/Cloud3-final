@@ -6,11 +6,10 @@ class videoGame:
     Genre=""
     Platform=""
     Publisher=""
-    Critic_score=""
     Img_url="https://www.vgchartz.com"
     
     
-    def __init__(self, rank, name, genre, platform, publisher, critScore, imgUrl):
+    def __init__(self, rank, name, genre, platform, publisher, imgUrl):
         super().__init__()
         
         self.Rank = rank
@@ -18,7 +17,6 @@ class videoGame:
         self.Genre = genre
         self.Platform = platform
         self.Publisher = publisher
-        self.Critic_score = critScore
         self.Img_url = self.Img_url + imgUrl
         
         

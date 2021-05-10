@@ -32,12 +32,10 @@ class mainWindowController(qt.QMainWindow):
         
     def initializeTable(self):
         #queries for all games in the database
-        try:
-            dbCol = connectDB()      
         
-            results = dbCol.find({})
-        except Exception :
-            print("Mongo Query Error")
+        dbCol = connectDB("VideoGames")      
+    
+        results = dbCol.find({})
     
         
         #sets a iterator
@@ -46,7 +44,7 @@ class mainWindowController(qt.QMainWindow):
         #loops through all items and inserts them into the windows listbox
         for items in results[0:1000]:
             #creates game object
-            game = videoGame(items["Rank"],items["Name"], items["Genre"], items["Platform"], items["Publisher"], 8, items["img_url"])   
+            game = videoGame(items["Rank"],items["Name"], items["Genre"], items["Platform"], items["Publisher"], items["img_url"])   
             
             self.listWidget.addItem(game.Rank + ". " + game.Name + " - " + game.Platform)
             self.gameList.append(game)
@@ -55,12 +53,15 @@ class mainWindowController(qt.QMainWindow):
         #retrieves what the user searched
         searchEntry = self.searchBar.text()
         
-        dbCol = connectDB()
-        results = dbCol.find({ "$or" : [{"Name":searchEntry},{"Genre":searchEntry},{"Platform":searchEntry}]}  )
+        #connect to database and search for all 
+        db = connectDB("VideoGames")
+        results = db.find({ "$or" : [{"Name":searchEntry},{"Genre":searchEntry},{"Platform":searchEntry}]} )
+        
+        # set current row posistion and 
         rowPosition = 0
         self.listWidget.clear()
         for i in results: 
-            game = videoGame(i["Rank"], i["Name"], i["Genre"], i["Platform"], i["Publisher"], 8, i["img_url"])
+            game = videoGame(i["Rank"], i["Name"], i["Genre"], i["Platform"], i["Publisher"], i["img_url"])
             self.listWidget.addItem(game.Rank + ". " + game.Name + " - " + game.Platform)
             
     def viewGame(self):

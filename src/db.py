@@ -5,11 +5,11 @@ config = dotenv_values(".env")
 
 
         
-def connectDB():
+def connectDB(collectionName):
     client = pymongo.MongoClient("mongodb+srv://{}:{}@cluster0.79bpm.mongodb.net/myFirstDatabase?retryWrites=true&w=majority".format(config['MONGO_USER'], config['MONGO_PSWD']))
 
     db = client["VideoGameReccomender"]
-    collection = db["VideoGames"]
+    collection = db[collectionName]
     
     
     return collection
