@@ -7,22 +7,28 @@ from PyQt5 import uic, QtGui
 from db import connectDB
 from model.videoGame import videoGame
 from controller.gameWindowController import gameWindowController
-
+from controller.loginWindowController import loginWindowController
+from controller.editUserWindowController import editUserWindowController
 
 class mainWindowController(qt.QMainWindow): 
     gameList = []
-    
+    user =""
     nextWindow = ""
     
-    def __init__(self, parent=None):
+    def __init__(self, user, parent=None):
         super().__init__()
+        
+        self.user = user
+        
         #loads the view into the controllerad
         uic.loadUi("src/view/main.ui", self)
         
+        self.welcomeLabel.setText("Welcome " + self.user.name + "!")
         # sets up event handlers
         self.searchButton.clicked.connect(self.handleSearch)
         self.listWidget.itemDoubleClicked.connect(self.viewGame)
-        
+        self.logoutButton.clicked.connect(self.logout)
+        self.editUser.clicked.connect(self.handleEditUser)
         
         #fill the table with rank, name, and image for each videogame
         self.initializeTable()
@@ -55,7 +61,7 @@ class mainWindowController(qt.QMainWindow):
         
         #connect to database and search for all 
         db = connectDB("VideoGames")
-        results = db.find({ "$or" : [{"Name":searchEntry},{"Genre":searchEntry},{"Platform":searchEntry}]} )
+        results = db.find({ "$text": {"$search":self.searchBar.text()}} )
         
         # set current row posistion and 
         rowPosition = 0
@@ -68,7 +74,16 @@ class mainWindowController(qt.QMainWindow):
         selectedGame = self.gameList[self.listWidget.currentRow()]
         self.nexWindow = gameWindowController(selectedGame)
         self.nexWindow.show()
-            
+        
+    def logout(self):
+        self.nexWindow = loginWindowController()
+        self.nexWindow.show()
+        self.close()
+        
+    def handleEditUser(self):
+        self.nextWindow = editUserWindowController(self.user)
+        self.nextWindow.show()
+        
             
         
             

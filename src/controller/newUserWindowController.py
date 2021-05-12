@@ -21,7 +21,7 @@ class newUserWindowController(QtWidgets.QWidget):
         else:  
             newUser = User(self.nameEdit.text(), self.emailEdit.text(), self.usernameEdit.text(), self.passwordEdit.text())
             newUser.saveUser()
-            self.nextWindow = mainWindowController()
+            self.nextWindow = mainWindowController(newUser)
             self.nextWindow.show()
             self.close()
             

@@ -1,8 +1,8 @@
 from PyQt5 import *
 
 from model.user import User
-from controller.mainWindowController import mainWindowController
-from controller.newUserWindowController import newUserWindowController
+
+
 from db import connectDB
 
 class loginWindowController(QtWidgets.QWidget):
@@ -19,14 +19,40 @@ class loginWindowController(QtWidgets.QWidget):
         
         
     def loginPressed(self):
-        print(self.usernameEdit.text())
-        print(self.passwordEdit.text())
+        db = connectDB("Users")
+        
+        try:
+            results = db.find_one({"username": self.usernameEdit.text(), "password": self.passwordEdit.text()})
+        except NameError:
+            msg = QtWidgets.QMessageBox()
+            msg.setWindowTitle("Error")
+            msg.setText("User not found, Please try again")
+            msg.exec_()
+            print(NameError)
+            return
+            
+            
+        if not results:
+            msg = QtWidgets.QMessageBox()
+            msg.setWindowTitle("Error")
+            msg.setText("User not found, Please try again")
+            msg.exec_()
+            
+        else :
+            from controller.mainWindowController import mainWindowController
+            user = User(results["name"], results["email"], results["username"], results["password"])
+            self.nextWindow = mainWindowController(user)
+            self.nextWindow.show()
+            self.close()
+            
+    
         
         
         
         
         
     def createNewPressed(self):
+        from controller.newUserWindowController import newUserWindowController
         self.nextWindow = newUserWindowController()
         self.nextWindow.show()
         self.close()

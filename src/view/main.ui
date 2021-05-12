@@ -27,9 +27,9 @@
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>10</y>
-     <width>281</width>
-     <height>71</height>
+     <y>40</y>
+     <width>261</width>
+     <height>61</height>
     </rect>
    </property>
    <property name="font">
@@ -52,29 +52,76 @@
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>90</y>
+     <y>100</y>
      <width>291</width>
      <height>20</height>
     </rect>
    </property>
    <property name="text">
-    <string>Search by Name, Genre or Platform</string>
+    <string/>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
+   </property>
+   <property name="placeholderText">
+    <string>search by name, genre, or platform</string>
    </property>
   </widget>
   <widget class="QPushButton" name="searchButton">
    <property name="geometry">
     <rect>
      <x>440</x>
-     <y>90</y>
+     <y>100</y>
      <width>75</width>
      <height>21</height>
     </rect>
    </property>
    <property name="text">
     <string>Search</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="welcomeLabel">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>10</y>
+     <width>201</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>14</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>TextLabel</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="logoutButton">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>500</y>
+     <width>151</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Logout</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="editUser">
+   <property name="geometry">
+    <rect>
+     <x>330</x>
+     <y>500</y>
+     <width>151</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Change user </string>
    </property>
   </widget>
  </widget>

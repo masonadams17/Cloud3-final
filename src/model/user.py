@@ -20,7 +20,7 @@ class User:
     def saveUser(self):
        
         # connects to user database
-        db = connectDB("Userss")
+        db = connectDB("Users")
        
         userDict = {"name" : self.name, "email": self.email, "username":  self.username, "password": self.password}
        
